@@ -53,6 +53,7 @@ def security_headers(domain):
     print(run_command(f"curl -I {domain}"))
 
 def run_all(domain, ip):
+    print("\n==================== Running All Security Checks ====================")
     dns_lookup(domain)
     whois_lookup(domain)
     port_scan(ip)
@@ -65,14 +66,62 @@ def run_all(domain, ip):
     lfi_test(domain)
     security_headers(domain)
 
+def show_help():
+    """Displays Help Menu"""
+    print("""
+    ==========================================
+    ||         Cyber Security Toolkit       ||
+    ==========================================
+    
+    Usage:
+    ------
+    python3 security_tool.py -d <domain> -i <ip> --all
+
+    Options:
+    --------
+    -d, --domain      Target domain for scanning (example.com)
+    -i, --ip          Target IP address for scanning (192.168.1.1)
+    --all             Run all security checks on the target
+    -h, --help        Show this help message and exit
+
+    Features:
+    ---------
+    1. DNS Lookup
+    2. WHOIS Lookup
+    3. Open Port Scanning (Nmap)
+    4. SSL Certificate Analysis
+    5. Shodan Recon
+    6. VirusTotal Scan
+    7. SQL Injection Test (SQLMap)
+    8. XSS Vulnerability Test
+    9. Open Redirect Test
+    10. Local File Inclusion (LFI) Test
+    11. Security Headers Check
+
+    Examples:
+    ---------
+    1️⃣ Basic domain scan:
+        python3 security_tool.py -d example.com
+
+    2️⃣ Scan an IP for open ports:
+        python3 security_tool.py -i 192.168.1.1
+
+    3️⃣ Run all available scans:
+        python3 security_tool.py -d example.com -i 192.168.1.1 --all
+    """)
+
 def main():
-    parser = argparse.ArgumentParser(description="Cyber Security Toolkit")
+    parser = argparse.ArgumentParser(description="Cyber Security Toolkit", add_help=False)
     parser.add_argument("-d", "--domain", help="Target domain for scanning")
     parser.add_argument("-i", "--ip", help="Target IP for scanning")
     parser.add_argument("--all", action="store_true", help="Run all security checks")
+    parser.add_argument("-h", "--help", action="store_true", help="Show help menu")
+
     args = parser.parse_args()
-    
-    if args.all and args.domain and args.ip:
+
+    if args.help:
+        show_help()
+    elif args.all and args.domain and args.ip:
         run_all(args.domain, args.ip)
     elif args.domain:
         dns_lookup(args.domain)
@@ -88,7 +137,7 @@ def main():
     elif args.ip:
         port_scan(args.ip)
     else:
-        print("Usage: python security_tool.py -d example.com -i 192.168.1.1 --all")
+        print("[!] Invalid usage. Use -h or --help for the correct syntax.")
 
 if __name__ == "__main__":
     main()
