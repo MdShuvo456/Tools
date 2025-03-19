@@ -1,11 +1,11 @@
-##  **Tools**
+## Tools
 
 
-## WAF Bypass & Real IP Finder Tool 
+## **WAF Bypass & Real IP Finder Tool**
 
-==========================================
-||    WAF Bypass & Real IP Finder Tool   ||
-==========================================
+**==========================================**
+**||    WAF Bypass & Real IP Finder Tool   ||**
+**==========================================**
 Usage:
 ------
 python3 script.py -d <domain>
